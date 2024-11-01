@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\DataKesesuaianController;
+use App\Http\Controllers\DataSubkriteriaController;
+use App\Http\Controllers\DataTanahController;
+use App\Http\Controllers\DataTanamanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KriteriaController;
 /*
@@ -17,3 +21,9 @@ Route::get('/', function () {
     return view('dashboard');
 });
 Route::resource('kriteria', KriteriaController::class);
+Route::resource('data-tanaman',DataTanamanController::class);
+Route::resource('data-tanah', DataTanahController::class);
+Route::resource('data-subkriteria', DataSubkriteriaController::class);
+Route::resource('data-kesesuaian',DataKesesuaianController::class);
+
+
