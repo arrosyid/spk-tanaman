@@ -12,7 +12,9 @@ class DataTanamanController extends Controller
      */
     public function index()
     {
-        //
+        //menampilkan data tanaman
+        $tanaman = DataTanaman::all();
+        return view('tanaman.index', compact('tanaman'));
     }
 
     /**
@@ -20,7 +22,8 @@ class DataTanamanController extends Controller
      */
     public function create()
     {
-        //
+        //menampilkan form untuk menambah tanaman baru
+        return view('tanaman.create');
     }
 
     /**
@@ -28,13 +31,19 @@ class DataTanamanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validasi inputan
+        $request->validate([
+            'nama_tanaman' => 'required'
+        ]);
+        //menyimpan data tanaman
+        DataTanaman::create($request->all());
+        return redirect()->route('tanaman.index')->with('success', 'Data tanaman berhasil ditambahkan.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(DataTanaman $dataTanaman)
+    public function show(DataTanaman $tanaman)
     {
         //
     }
@@ -42,24 +51,45 @@ class DataTanamanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(DataTanaman $dataTanaman)
+    public function edit(DataTanaman $tanaman)
     {
         //
+        $tanaman = DataTanaman::findOrFail($tanaman->id);
+        return view(
+            'tanaman.edit',
+            compact('tanaman')
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DataTanaman $dataTanaman)
+    public function update(Request $request, DataTanaman $tanaman)
     {
-        //
+        // Validasi inputan untuk update
+        $request->validate([
+            'nama_tanaman' => 'required',
+        ]);
+
+        // Ambil data tanaman berdasarkan ID
+        $tanaman = DataTanaman::findOrFail($tanaman->id);
+
+        // Update data dengan inputan baru
+        $tanaman->update($request->all());
+
+        // Redirect kembali ke halaman index dengan pesan sukses
+        return redirect()->route('tanaman.index')->with('success', 'Data tanaman berhasil diupdate.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DataTanaman $dataTanaman)
+    public function destroy(DataTanaman $tanaman)
     {
-        //
+        // Ambil data tanaman berdasarkan ID dan hapus
+
+        DataTanaman::findOrFail($tanaman->id)->delete();
+        // Redirect kembali ke halaman index dengan pesan sukses
+        return redirect()->route('tanaman.index')->with('success', 'Data tanaman berhasil dihapus.');
     }
 }

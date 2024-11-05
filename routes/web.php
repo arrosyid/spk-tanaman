@@ -21,9 +21,10 @@ Route::get('/', function () {
     return view('dashboard');
 });
 Route::resource('kriteria', KriteriaController::class);
-Route::resource('data-tanaman',DataTanamanController::class);
-Route::resource('data-tanah', DataTanahController::class);
-Route::resource('data-subkriteria', DataSubkriteriaController::class);
-Route::resource('data-kesesuaian',DataKesesuaianController::class);
+Route::resource('tanaman',DataTanamanController::class);
+Route::resource('tanah', DataTanahController::class);
+Route::resource('subkriteria', DataSubkriteriaController::class);
+Route::resource('kesesuaian',DataKesesuaianController::class);
+Route::get('tanaman/detail/{id}', [DataTanamanController::class, 'detail'])->name('tanaman.detail');
 
 
