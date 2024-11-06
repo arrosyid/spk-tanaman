@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DataSubkriteria;
+use App\Models\DataTanaman;
 use Illuminate\Http\Request;
 
 class DataSubkriteriaController extends Controller
@@ -13,6 +14,9 @@ class DataSubkriteriaController extends Controller
     public function index()
     {
         //
+        $subkriteria = DataSubkriteria::with('tanaman')->get();
+
+        return view('subkriteria.index', compact('subkriteria'));
     }
 
     /**
