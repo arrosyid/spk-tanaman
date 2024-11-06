@@ -95,7 +95,7 @@
     <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" href="/">
+                <a class="nav-link {{ Request::is('/') ? 'active' : 'collapsed' }}" href="/">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
@@ -104,20 +104,26 @@
             <li class="nav-heading">Master Data</li>
 
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('barang*') ? 'active' : '' }}" href="{{ route('kriteria.index') }}">
+                <a class="nav-link {{ Request::is('kriteria*') ? 'active' : 'collapsed' }}" href="{{ route('kriteria.index') }}">
                     <i class="bi bi-box"></i>
                     <span>Data Kriteria</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('transaksi*') ? 'active' : '' }}" href="#">
+                <a class="nav-link {{ Request::is('tanaman*') ? 'active' : 'collapsed' }}" href="{{route('tanaman.index')}}">
+                    <i class="bi bi-list"></i>
+                    <span>Data tanaman</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('subkriteria*') ? 'active' : 'collapsed' }}" href="{{route('subkriteria.index')}}">
                     <i class="bi bi-cash-coin"></i>
-                    <span>Data Sub Kriteria</span>
+                    <span>Data Subkriteria</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('laporan*') ? 'active' : '' }}" href="#">
+                <a class="nav-link {{ Request::is('laporan*') ? 'active' : 'collapsed' }}" href="#">
                     <i class="bi bi-file-earmark-bar-graph"></i>
                     <span>Data Alternatif</span>
                 </a>
@@ -125,7 +131,7 @@
 
             <li class="nav-heading">SAW</li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('forecasting*') ? 'active' : '' }}" href="#">
+                <a class="nav-link {{ Request::is('forecasting*') ? 'active' : 'collapsed' }}" href="#">
                     <i class="bi bi-graph-up"></i>
                     <span>Perhitungan</span>
                 </a>
