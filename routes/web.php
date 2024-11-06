@@ -4,6 +4,7 @@ use App\Http\Controllers\DataKesesuaianController;
 use App\Http\Controllers\DataSubkriteriaController;
 use App\Http\Controllers\DataTanahController;
 use App\Http\Controllers\DataTanamanController;
+use App\Models\DataKesesuaian;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KriteriaController;
 /*
@@ -18,7 +19,10 @@ use App\Http\Controllers\KriteriaController;
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    // KIRIM DATA KE VIEW
+    $kesesuaian = DataKesesuaian::all();
+
+    return view('dashboard', ['kesesuaian' => $kesesuaian]);
 });
 Route::resource('kriteria', KriteriaController::class);
 Route::resource('tanaman',DataTanamanController::class);
