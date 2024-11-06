@@ -15,4 +15,9 @@ class DataKesesuaian extends Model
         'tingkatan',
         'bobot',
     ];
+
+    public function subkriteria()
+    {
+        return $this->hasmany(DataSubkriteria::class, 'id_keseuaian');
+    }
 }

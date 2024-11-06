@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(KriteriaSeeder::class);
+        $this->call(KesesuaianSeeder::class);
         
         // \App\Models\User::factory(10)->create();
 

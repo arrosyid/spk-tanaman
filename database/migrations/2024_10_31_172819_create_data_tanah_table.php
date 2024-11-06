@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('kode_tanah');
             $table->string('lokasi_tanah');
-            $table->string('bulan');
-            $table->integer('tahun');
             $table->timestamps();
         });
     }

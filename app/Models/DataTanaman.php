@@ -14,4 +14,9 @@ class DataTanaman extends Model
     protected $fillable = [
         'nama_tanaman',
     ];
+
+    public function subkriteria()
+    {
+        return $this->hasmany(DataSubkriteria::class, 'id_tanaman');
+    }
 }

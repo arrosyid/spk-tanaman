@@ -13,7 +13,5 @@ class DataTanah extends Model
     protected $fillable = [
         'kode_tanah',
         'lokasi_tanah',
-        'bulan',
-        'tahun',
     ];
 }
