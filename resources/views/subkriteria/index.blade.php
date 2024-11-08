@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="mb-0">Data Subkriteria</h1>
+    <h1 class="mb-0">Subkriteria Tanaman</h1>
     <a href="{{ route('tanaman.create') }}" class="btn btn-primary">Tambah Subkriteria tanaman</a>
 </div>
 

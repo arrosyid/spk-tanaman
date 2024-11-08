@@ -118,7 +118,7 @@
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('subkriteria*') ? 'active' : 'collapsed' }}" href="{{route('subkriteria.index')}}">
                     <i class="bi bi-cash-coin"></i>
-                    <span>Data Subkriteria</span>
+                    <span>Subkriteria Tanaman</span>
                 </a>
             </li>
 
