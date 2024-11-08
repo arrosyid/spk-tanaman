@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DataSubkriteria;
-use App\Models\DataTanaman;
 use Illuminate\Http\Request;
+use App\Models\DataKesesuaian;
+use App\Models\DataSubkriteria;
 
 class DataSubkriteriaController extends Controller
 {
@@ -14,9 +14,10 @@ class DataSubkriteriaController extends Controller
     public function index()
     {
         //
-        $subkriteria = DataSubkriteria::with('tanaman')->get();
+        $subkriteria = DataSubkriteria::all();
+        $tanaman = $subkriteria->pluck('tanaman')->unique();
 
-        return view('subkriteria.index', compact('subkriteria'));
+        return view('subkriteria.index', compact('subkriteria', 'tanaman'));
     }
 
     /**
@@ -38,9 +39,20 @@ class DataSubkriteriaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(DataSubkriteria $dataSubkriteria)
+    public function show(DataSubkriteria $subkriterium)
     {
         //
+    }
+
+    public function detail($id_tanaman)
+    {
+        // $subkriteria = DataSubkriteria::all();
+        $kesesuaian = DataKesesuaian::all();
+        $subkriteria = DataSubkriteria::where('id_tanaman', $id_tanaman)->get();
+        // Kelompokkan data berdasarkan nama_kriteria
+        $kriteria =  $subkriteria->pluck('kriteria')->unique();;
+        // dd($kriteria);
+        return view('subkriteria.detail', compact(var_name: ['subkriteria','kesesuaian', 'kriteria']));
     }
 
     /**

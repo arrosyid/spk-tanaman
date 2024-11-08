@@ -23,12 +23,12 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($subkriteria as $index => $item)
+            @foreach($tanaman as $index => $item)
             <tr>
-                <td>{{ $index + 1 }}</td> <!-- Penomoran otomatis -->
-                <td>{{ $item->tanaman->nama_tanaman }}</td>
+                <td>{{ $loop->iteration }}</td> <!-- Penomoran otomatis -->
+                <td>{{ $item->nama_tanaman }}</td>
                 <td class="text-center">
-                    <a href="{{ route('tanaman.detail', $item->tanaman->id) }}" class="btn btn-sm btn-warning">
+                    <a href="{{ route('subkriteria.detail', $item->id) }}" class="btn btn-sm btn-warning">
                         <i class="bi bi-list"></i> Detail
                     </a>
                 </td>

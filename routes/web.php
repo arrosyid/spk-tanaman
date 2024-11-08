@@ -21,7 +21,6 @@ use App\Http\Controllers\KriteriaController;
 Route::get('/', function () {
     // KIRIM DATA KE VIEW
     $kesesuaian = DataKesesuaian::all();
-
     return view('dashboard', ['kesesuaian' => $kesesuaian]);
 });
 Route::resource('kriteria', KriteriaController::class);
@@ -29,6 +28,4 @@ Route::resource('tanaman',DataTanamanController::class);
 Route::resource('tanah', DataTanahController::class);
 Route::resource('subkriteria', DataSubkriteriaController::class);
 Route::resource('kesesuaian',DataKesesuaianController::class);
-Route::get('tanaman/detail/{id}', [DataTanamanController::class, 'detail'])->name('tanaman.detail');
-
-
+Route::get('subkriteria/detail/{id_tanaman}', [DataSubkriteriaController::class, 'detail'])->name('subkriteria.detail');
