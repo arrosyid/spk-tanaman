@@ -15,8 +15,7 @@ class DataSubkriteria extends Model
         'id_kriteria',
         'id_tanaman',
         'id_kesesuaian',
-        'lower',
-        'upper',
+        'range',
     ];
 
     /**
