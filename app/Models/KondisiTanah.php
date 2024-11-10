@@ -17,8 +17,7 @@ class KondisiTanah extends Model
         'id_kriteria',
         'id_tanah',
         'nilai',
-        'bulan',
-        'tahun'
+        'bulan'
     ];
 
     /**

@@ -14,4 +14,8 @@ class DataTanah extends Model
         'kode_tanah',
         'lokasi_tanah',
     ];
+
+    public function KondisiTanah(){
+        return $this->hasMany(KondisiTanah::class, 'id_tanah');
+    }
 }

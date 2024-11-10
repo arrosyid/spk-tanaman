@@ -123,9 +123,9 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('laporan*') ? 'active' : 'collapsed' }}" href="#">
+                <a class="nav-link {{ Request::is('tanah*') ? 'active' : 'collapsed' }}" href="{{route('tanah.index')}}">
                     <i class="bi bi-file-earmark-bar-graph"></i>
-                    <span>Data Alternatif</span>
+                    <span>Data tanah</span>
                 </a>
             </li>
 
