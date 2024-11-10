@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataSubkriteria;
 use App\Models\DataTanaman;
+use App\Models\DataKriteria;
 use Illuminate\Http\Request;
+use App\Models\DataKesesuaian;
 
 class DataTanamanController extends Controller
 {
@@ -22,8 +25,10 @@ class DataTanamanController extends Controller
      */
     public function create()
     {
+        $kesesuaian = DataKesesuaian::all();
+        $kriteria = DataKriteria::all();
         //menampilkan form untuk menambah tanaman baru
-        return view('tanaman.create');
+        return view('tanaman.create', compact('kesesuaian', 'kriteria'));
     }
 
     /**
@@ -33,10 +38,30 @@ class DataTanamanController extends Controller
     {
         //validasi inputan
         $request->validate([
-            'nama_tanaman' => 'required'
+            'nama_tanaman' => 'required',
+            'kriteria' => 'required||array',
         ]);
+
+        // 1. Simpan nama tanaman
+        $tanaman = DataTanaman::create([
+            'nama_tanaman' => $request->input('nama_tanaman'),
+        ]);
+
+        // 2. Siapkan data subkriteria
+        $subkriteriaData = [];
+        foreach ($request->input('kriteria') as $id_kriteria => $tingkatan) {
+            foreach ($tingkatan as $id_kesesuaian => $range) {
+                $subkriteriaData[] = new DataSubkriteria([
+                    'id_kriteria' => $id_kriteria,
+                    'id_kesesuaian' => $id_kesesuaian,
+                    'lower' => $range['lower'],
+                    'upper' => $range['upper'],
+                ]);
+            }
+        }
+        $tanaman->subkriteria()->saveMany($subkriteriaData);
+        // dd($subkriteriaData);
         //menyimpan data tanaman
-        DataTanaman::create($request->all());
         return redirect()->route('tanaman.index')->with('success', 'Data tanaman berhasil ditambahkan.');
     }
 

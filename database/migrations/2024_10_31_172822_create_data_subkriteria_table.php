@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('id_kriteria')->constrained('data_kriteria');
             $table->foreignId('id_tanaman')->constrained('data_tanaman');
             $table->foreignId('id_kesesuaian')->constrained('data_kesesuaian');
-            $table->integer('lowwer');
+            $table->integer('lower');
             $table->integer('upper');
             $table->timestamps();
         });

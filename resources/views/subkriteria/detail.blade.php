@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="mb-0">Data Subkriteria Tanaman</h1>
+    <h2 class="mb-0">Data Subkriteria Tanaman {{$subkriteria->pluck('tanaman.nama_tanaman')->first()}}</h2>
     <a href="{{ route('subkriteria.index') }}" class="btn btn-primary">Edit</a>
 </div>
 
@@ -22,7 +22,6 @@
                 @foreach ($kesesuaian as $k)
                     <th>{{ $k->tingkatan }}</th>
                 @endforeach
-                <th class="text-center">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -34,11 +33,16 @@
                 @foreach ($kesesuaian as $k )
                     @php
                         $sub = $subkriteria->where('id_kesesuaian', $k->id)->where('id_kriteria', $item->id)->first();
+                        if (!$sub) {
+                            $viewData = 'Tidak ada data';
+                        }elseif ($sub->lower <= 0) {
+                            $viewData = '<'.$sub->upper;
+                        }else{
+                            $viewData = $sub->upper . '-' . $sub->lower;
+                        }
                     @endphp
-                        <td>{{ $sub ? $sub->upper . '-' . $sub->lowwer : 'Tidak ada data' }}</td>
+                        <td>{{ $viewData }}</td>
                 @endforeach
-                <!-- button edit -->
-                <td><a href="#" class="btn btn-sm btn-warning">Edit</td>
             </tr>
             @endforeach
         </tbody>

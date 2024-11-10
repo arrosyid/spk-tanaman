@@ -50,8 +50,8 @@ class DataSubkriteriaController extends Controller
         $kesesuaian = DataKesesuaian::all();
         $subkriteria = DataSubkriteria::where('id_tanaman', $id_tanaman)->get();
         // Kelompokkan data berdasarkan nama_kriteria
-        $kriteria =  $subkriteria->pluck('kriteria')->unique();;
-        // dd($kriteria);
+        $kriteria =  $subkriteria->pluck('kriteria')->unique();
+        
         return view('subkriteria.detail', compact(var_name: ['subkriteria','kesesuaian', 'kriteria']));
     }
 
