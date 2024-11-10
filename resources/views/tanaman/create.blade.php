@@ -13,31 +13,53 @@
                 <input type="text" name="nama_tanaman" placeholder="Masukkan Nama Tanaman" class="form-control" required>
             </div>
             <hr>
-            <h4><strong>Masukkan Kriteria</strong></h4>
+            <h4><strong>Masukkan Subkriteria Tanaman</strong></h4>
+            <p>masukkan nilai subkriteria dengan menentukan rentang nilai seperti <b>100-200</b> atau <b>>100</b></p>
+            <hr>
             @foreach ($kriteria as $C)
-            <br>
             <h5>Kriteria {{$C->nama_kriteria}}</h5>
-                @foreach ($kesesuaian as $k)
-                <div class="row g-3 align-items-center">
-                    <div class="col-1 mb-3">
-                        <label for="input-{{$C->id}}-{{$k->id}}" class="col-form-label">{{$k->tingkatan}}</label>
+            <!-- template -->
+            <div id="group-container-{{ $C->id }}">
+                <div class="subkriteria-group-template border rounded p-3 mb-3">
+                    @foreach ($kesesuaian as $k)
+                    <div class="row g-3 align-items-center">
+                        <div class="col-1 mb-3">
+                            <label class="col-form-label">{{$k->tingkatan}}</label>
+                        </div>
+                        <div class="col">
+                            <input type="text" name="kriteria[][{{$C->id}}][{{$k->id}}]" id="subkriteria-primary-0" placeholder="Masukkan Rentang Nilai Subkriteria {{$C->nama_kriteria}}" class="form-control" required>
+                        </div>
                     </div>
-                    <div class="col-auto">
-                        <input type="number" name="kriteria[{{$C->id}}][{{$k->id}}][lower]" placeholder="Lower Value (Terendah)" class="form-control" required>
-                    </div>
-                    <div class="col-auto">
-                        <span class="form-text"> - </span>
-                    </div>
-                    <div class="col-auto">
-                        <input type="number" name="kriteria[{{$C->id}}][{{$k->id}}][upper]" placeholder="Upper Value (Tertinggi)" class="form-control" required>
-                    </div>
+                    @endforeach
+                    <button type="button" onclick="removeSubkriteriaGroup(this)" id="remove-subkriteria" class="btn btn-danger btn-sm d-none">Hapus</button>
                 </div>
-                @endforeach
+            </div>
+            <button type="button" onclick="addSubkriteriaGroup({{ $C->id }})" class="btn btn-primary btn-sm mb-3">Tambah Kelompok Subkriteria {{$C->nama_kriteria}}</button>
+            <hr>
             @endforeach
-            
             <button type="submit" class="btn btn-success">Simpan</button>
             <a href="{{ route('tanaman.index') }}" class="btn btn-secondary">Batal</a>
         </form>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    function addSubkriteriaGroup(kriteriaId) {
+        const container = document.getElementById(`group-container-${kriteriaId}`);
+        // Get the template and clone it
+        const template = container.querySelector('.subkriteria-group-template');
+        const clone = template.cloneNode(true);
+        // Generate a unique index based on the current time for dynamic name attribute
+        clone.querySelector('#remove-subkriteria').classList.remove('d-none');
+        // Append the cloned template to the container
+        container.appendChild(clone);
+    }
+
+    function removeSubkriteriaGroup(button) {
+        // Remove the specific group container
+        button.closest('.subkriteria-group-template').remove();
+    }
+</script>
+@endpush

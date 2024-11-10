@@ -39,8 +39,9 @@ class DataTanamanController extends Controller
         //validasi inputan
         $request->validate([
             'nama_tanaman' => 'required',
-            'kriteria' => 'required||array',
+            'kriteria' => 'required',
         ]);
+        // dd($request->all());
 
         // 1. Simpan nama tanaman
         $tanaman = DataTanaman::create([
@@ -49,18 +50,19 @@ class DataTanamanController extends Controller
 
         // 2. Siapkan data subkriteria
         $subkriteriaData = [];
-        foreach ($request->input('kriteria') as $id_kriteria => $tingkatan) {
-            foreach ($tingkatan as $id_kesesuaian => $range) {
-                $subkriteriaData[] = new DataSubkriteria([
-                    'id_kriteria' => $id_kriteria,
-                    'id_kesesuaian' => $id_kesesuaian,
-                    'lower' => $range['lower'],
-                    'upper' => $range['upper'],
-                ]);
+        foreach ($request->input('kriteria') as $kriteria) {
+            foreach ($kriteria as $id_kriteria => $tingkatan) {
+                foreach ($tingkatan as $id_kesesuaian => $range) {
+                    $subkriteriaData[] = new DataSubkriteria([
+                        'id_kriteria' => $id_kriteria,
+                        'id_kesesuaian' => $id_kesesuaian,
+                        'range' => $range,
+                    ]);
+                }
             }
         }
-        $tanaman->subkriteria()->saveMany($subkriteriaData);
         // dd($subkriteriaData);
+        $tanaman->subkriteria()->saveMany($subkriteriaData);
         //menyimpan data tanaman
         return redirect()->route('tanaman.index')->with('success', 'Data tanaman berhasil ditambahkan.');
     }

@@ -32,16 +32,18 @@
 
                 @foreach ($kesesuaian as $k )
                     @php
-                        $sub = $subkriteria->where('id_kesesuaian', $k->id)->where('id_kriteria', $item->id)->first();
-                        if (!$sub) {
-                            $viewData = 'Tidak ada data';
-                        }elseif ($sub->lower <= 0) {
-                            $viewData = '<'.$sub->upper;
+                        $sub = $subkriteria->where('id_kesesuaian', $k->id)->where('id_kriteria', $item->id);
+                        foreach ($sub as $s) {
+                            $ranges[] = $s->range;
+                        }
+                        if (empty($ranges)) {
+                            $view = 'Tidak ada data';
                         }else{
-                            $viewData = $sub->upper . '-' . $sub->lower;
+                            $view = implode(' <br> ', $ranges);
+                            unset($ranges);
                         }
                     @endphp
-                        <td>{{ $viewData }}</td>
+                        <td>{!! $view !!}</td>
                 @endforeach
             </tr>
             @endforeach
