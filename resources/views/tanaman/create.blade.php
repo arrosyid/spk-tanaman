@@ -14,7 +14,7 @@
             </div>
             <hr>
             <h4><strong>Masukkan Subkriteria Tanaman</strong></h4>
-            <p>masukkan nilai subkriteria dengan menentukan rentang nilai seperti <b>100-200</b> atau <b>>100</b></p>
+            <p>masukkan nilai subkriteria dengan menentukan rentang nilai seperti <b>100-200</b> atau <b>>100</b> atau <b>>1.5-4.5</b></p>
             <hr>
             @foreach ($kriteria as $C)
             <h5>Kriteria {{$C->nama_kriteria}}</h5>
@@ -27,7 +27,7 @@
                             <label class="col-form-label">{{$k->tingkatan}}</label>
                         </div>
                         <div class="col">
-                            <input type="text" name="kriteria[][{{$C->id}}][{{$k->id}}]" id="subkriteria-primary-0" placeholder="Masukkan Rentang Nilai Subkriteria {{$C->nama_kriteria}}" class="form-control" required>
+                            <input type="text" name="kriteria[][{{$C->id}}][{{$k->id}}]" id="subkriteria-primary-0" placeholder="Masukkan Rentang Nilai Subkriteria {{$C->nama_kriteria}}" class="form-control">
                         </div>
                     </div>
                     @endforeach

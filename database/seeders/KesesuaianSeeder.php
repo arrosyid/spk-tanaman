@@ -18,22 +18,26 @@ class KesesuaianSeeder extends Seeder
             [
                 'id' => 1,
                 'tingkatan' => 'S1',
-                'bobot' => 4
+                'bobot' => 4,
+                'created_at' => now()
             ],
             [
                 'id' => 2,
                 'tingkatan' => 'S2',
-                'bobot' => 3
+                'bobot' => 3,
+                'created_at' => now()
             ],
             [
                 'id' => 3,
                 'tingkatan' => 'S3',
-                'bobot' => 2
+                'bobot' => 2,
+                'created_at' => now()
             ],
             [
                 'id' => 4,
                 'tingkatan' => 'N',
-                'bobot' => 1
+                'bobot' => 1,
+                'created_at' => now()
             ],
         ]);
     }

@@ -19,21 +19,24 @@ class KriteriaSeeder extends Seeder
                 'kode_kriteria' => 'C1',
                 'nama_kriteria' => 'Curah Hujan',
                 'type' => 'benefit',
-                'bobot' => 30
+                'bobot' => 30,
+                'created_at' => now()
             ],
             [
                 'id' => 2,
                 'kode_kriteria' => 'C2',
-                'nama_kriteria' => 'Kelembaban',
+                'nama_kriteria' => 'pH Tanah',
                 'type' => 'benefit',
-                'bobot' => 30
+                'bobot' => 30,
+                'created_at' => now()
             ],
             [
                 'id' => 3,
                 'kode_kriteria' => 'C3',
-                'nama_kriteria' => 'Kedalaman tanah',
+                'nama_kriteria' => 'Kedalaman(cm)',
                 'type' => 'benefit',
-                'bobot' => 40
+                'bobot' => 40,
+                'created_at' => now()
             ]
         ]);
     }

@@ -53,11 +53,15 @@ class DataTanamanController extends Controller
         foreach ($request->input('kriteria') as $kriteria) {
             foreach ($kriteria as $id_kriteria => $tingkatan) {
                 foreach ($tingkatan as $id_kesesuaian => $range) {
-                    $subkriteriaData[] = new DataSubkriteria([
-                        'id_kriteria' => $id_kriteria,
-                        'id_kesesuaian' => $id_kesesuaian,
-                        'range' => $range,
-                    ]);
+                    if ($range == null) {
+                        continue;
+                    }else{
+                        $subkriteriaData[] = new DataSubkriteria([
+                            'id_kriteria' => $id_kriteria,
+                            'id_kesesuaian' => $id_kesesuaian,
+                            'range' => $range,
+                        ]);
+                    }
                 }
             }
         }
@@ -114,8 +118,9 @@ class DataTanamanController extends Controller
     public function destroy(DataTanaman $tanaman)
     {
         // Ambil data tanaman berdasarkan ID dan hapus
-
-        DataTanaman::findOrFail($tanaman->id)->delete();
+        $tanaman = DataTanaman::findOrFail($tanaman->id);
+        $tanaman->subkriteria()->delete();
+        $tanaman->delete();
         // Redirect kembali ke halaman index dengan pesan sukses
         return redirect()->route('tanaman.index')->with('success', 'Data tanaman berhasil dihapus.');
     }

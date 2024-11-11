@@ -17,6 +17,6 @@ class DataTanaman extends Model
 
     public function subkriteria()
     {
-        return $this->hasmany(DataSubkriteria::class, 'id_tanaman');
+        return $this->hasMany(DataSubkriteria::class, 'id_tanaman');
     }
 }
