@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\DataKesesuaianController;
 use App\Http\Controllers\DataSubkriteriaController;
 use App\Http\Controllers\DataTanahController;
 use App\Http\Controllers\DataTanamanController;
@@ -27,5 +26,4 @@ Route::resource('kriteria', KriteriaController::class);
 Route::resource('tanaman',DataTanamanController::class);
 Route::resource('tanah', DataTanahController::class);
 Route::resource('subkriteria', DataSubkriteriaController::class);
-Route::resource('kesesuaian',DataKesesuaianController::class);
 Route::get('subkriteria/detail/{id_tanaman}', [DataSubkriteriaController::class, 'detail'])->name('subkriteria.detail');
