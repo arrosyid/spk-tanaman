@@ -17,4 +17,14 @@ class DataKriteria extends Model
         'type',
         'bobot',
     ];
+
+    public function kondisiTanah()
+    {
+        return $this->hasMany(KondisiTanah::class, 'id_kriteria');
+    }
+
+    public function subkriteria()
+    {
+        return $this->hasMany(DataSubkriteria::class, 'id_kriteria');
+    }
 }

@@ -15,7 +15,7 @@ class DataTanah extends Model
         'lokasi_tanah',
     ];
 
-    public function KondisiTanah(){
+    public function kondisiTanah(){
         return $this->hasMany(KondisiTanah::class, 'id_tanah');
     }
 }

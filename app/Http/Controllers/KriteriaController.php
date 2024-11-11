@@ -87,6 +87,8 @@ class KriteriaController extends Controller
     {
         // Ambil data kriteria berdasarkan ID dan hapus
         $kriteria = DataKriteria::findOrFail($id);
+        $kriteria->kondisiTanah()->delete();
+        $kriteria->subkriteria()->delete();
         $kriteria->delete();
 
         // Redirect kembali ke halaman index dengan pesan sukses
