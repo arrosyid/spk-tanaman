@@ -84,11 +84,13 @@ class DataTanamanController extends Controller
      */
     public function edit(DataTanaman $tanaman)
     {
-        //
         $tanaman = DataTanaman::findOrFail($tanaman->id);
+        $kriteria = DataKriteria::all();
+        $kesesuaian = DataKesesuaian::all();
+        // dd($tanaman->subkriteria);
         return view(
             'tanaman.edit',
-            compact('tanaman')
+            compact(['tanaman', 'kriteria', 'kesesuaian'])
         );
     }
 
@@ -97,16 +99,48 @@ class DataTanamanController extends Controller
      */
     public function update(Request $request, DataTanaman $tanaman)
     {
+        dd($request->all());
         // Validasi inputan untuk update
         $request->validate([
             'nama_tanaman' => 'required',
+            'kriteria' => 'required|array',
         ]);
 
         // Ambil data tanaman berdasarkan ID
         $tanaman = DataTanaman::findOrFail($tanaman->id);
 
+        // 2. Siapkan data subkriteria
+        $subkriteriaData = [];
+        foreach ($request->input('kriteria') as $kriteria) {
+            foreach ($kriteria as $id_kriteria => $tingkatan) {
+                foreach ($tingkatan as $id_kesesuaian => $range) {
+                    if ($range == null) {
+                        continue;
+                    }else{
+                        $subkriteriaData[] = new DataSubkriteria([
+                            'id_kriteria' => $id_kriteria,
+                            'id_kesesuaian' => $id_kesesuaian,
+                            'range' => $range,
+                        ]);
+                    }
+                }
+            }
+        }
+
         // Update data dengan inputan baru
-        $tanaman->update($request->all());
+        $tanaman->update($request->nama_tanaman);
+        $tanaman->subkriteria()->updateOrCreate(
+            [
+                'id_kriteria' => $request->id_kriteria
+            ],
+            [
+                'id_kriteria' => $request->id_kriteria,
+                'id_kesesuaian' => $request->id_kesesuaian,
+                'range' => $request->range,
+            ]
+        );
+        // $tanaman->subkriteria()->delete();
+        // $tanaman->subkriteria()->saveMany($subkriteriaData);
 
         // Redirect kembali ke halaman index dengan pesan sukses
         return redirect()->route('tanaman.index')->with('success', 'Data tanaman berhasil diupdate.');

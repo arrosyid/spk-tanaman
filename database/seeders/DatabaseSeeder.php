@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(KesesuaianSeeder::class);
         $this->call(TanamanSeeder::class);
         $this->call(SubkriteriaSeeder::class);
+        $this->call(TanahSeeder::class);
         
         // \App\Models\User::factory(10)->create();
 

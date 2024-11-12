@@ -59,50 +59,55 @@ class PerhitunganController extends Controller
     }
 
     private function convertBobot($subkriteria, $nilai) {
-        // dd(6.5 <= 6.7 && 6.7 <= 7.5 );
-        // dd($subkriteria);
         $bobot = null;
+    
+        // Pisahkan subkriteria ke dalam 3 kategori (rentang, <, >) untuk diurutkan secara manual
+        $rangeKriteria = [];
+        $lessThanKriteria = [];
+        $greaterThanKriteria = [];
+    
         foreach ($subkriteria as $sub) {
             if (strpos($sub->range, "<") !== false) {
-                $sub->range = (double) str_replace("<", "", $sub->range);
-                if ($nilai < $sub->range) {
-                    // return $sub->kesesuaian->bobot;
-                    // return $sub->range;
-                    $bobot = $sub->kesesuaian->bobot;
-                    break;
-                }
-            }elseif (strpos($sub->range, ">") !== false) {
-                $sub->range = (double) str_replace(">", "", $sub->range);
-                if ($nilai > $sub->range) {
-                    // return $sub->kesesuaian->bobot;
-                    // return $sub->range;
-                    $bobot = $sub->kesesuaian->bobot;
-                    break;
-                }
-                break;
-            }elseif (strpos($sub->range, "-") !== false) {
-                // Mengambil nilai min dan max dari rentang
-                $range = explode('-', $sub->range);
-                $min = (double) $range[0];
-                $max = (double) $range[1];
-                // print_r($min, $max);
-                // dd();
-        
-                // Menangani anomali jika min > max
-                if ($min > $max) {
-                    $a = $max;
-                    $max = $min;
-                    $min = $a;
-                }
-                // return $min;
-                
-                if ($min <= $nilai && $nilai <= $max) {
-                    // $bobot = [$min, $max];  
-                    // return $sub->kesesuaian->bobot;
-                    // return $range;
-                    $bobot = $sub->kesesuaian->bobot;
-                    break;
-                }
+                $lessThanKriteria[] = $sub;
+            } elseif (strpos($sub->range, ">") !== false) {
+                $greaterThanKriteria[] = $sub;
+            } elseif (strpos($sub->range, "-") !== false) {
+                $rangeKriteria[] = $sub;
+            }
+        }
+    
+        // Prioritaskan pengecekan rentang terlebih dahulu
+        foreach ($rangeKriteria as $sub) {
+            list($min, $max) = explode('-', $sub->range);
+            $min = (double) $min;
+            $max = (double) $max;
+    
+            // Menangani anomali jika min > max
+            if ($min > $max) {
+                list($min, $max) = [$max, $min];
+            }
+    
+            if ($nilai >= $min && $nilai <= $max) {
+                $bobot = $sub->kesesuaian->bobot;
+                return $bobot;
+            }
+        }
+    
+        // Kemudian cek kondisi lebih kecil ("<")
+        foreach ($lessThanKriteria as $sub) {
+            $limit = (double) str_replace("<", "", $sub->range);
+            if ($nilai < $limit) {
+                $bobot = $sub->kesesuaian->bobot;
+                return $bobot;
+            }
+        }
+    
+        // Terakhir, cek kondisi lebih besar (">")
+        foreach ($greaterThanKriteria as $sub) {
+            $limit = (double) str_replace(">", "", $sub->range);
+            if ($nilai > $limit) {
+                $bobot = $sub->kesesuaian->bobot;
+                return $bobot;
             }
         }
         return $bobot;

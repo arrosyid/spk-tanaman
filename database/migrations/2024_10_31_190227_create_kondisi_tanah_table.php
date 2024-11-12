@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('id_kriteria')->constrained('data_kriteria');
             $table->foreignId('id_tanah')->constrained('data_tanah');
             $table->double('nilai');
-            $table->string('bulan');
+            $table->string('bulan')->nullable();
             $table->timestamps();
         });
     }
