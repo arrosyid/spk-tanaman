@@ -19,7 +19,7 @@ class KriteriaSeeder extends Seeder
                 'kode_kriteria' => 'C1',
                 'nama_kriteria' => 'Curah Hujan',
                 'type' => 'benefit',
-                'bobot' => 30,
+                'bobot' => 40,
                 'created_at' => now()
             ],
             [
@@ -35,7 +35,7 @@ class KriteriaSeeder extends Seeder
                 'kode_kriteria' => 'C3',
                 'nama_kriteria' => 'Kedalaman(cm)',
                 'type' => 'benefit',
-                'bobot' => 40,
+                'bobot' => 30,
                 'created_at' => now()
             ]
         ]);
