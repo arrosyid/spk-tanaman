@@ -3,6 +3,7 @@
 use App\Http\Controllers\DataSubkriteriaController;
 use App\Http\Controllers\DataTanahController;
 use App\Http\Controllers\DataTanamanController;
+use App\Http\Controllers\PerhitunganController;
 use App\Models\DataKesesuaian;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KriteriaController;
@@ -27,3 +28,4 @@ Route::resource('tanaman',DataTanamanController::class);
 Route::resource('tanah', DataTanahController::class);
 Route::resource('subkriteria', DataSubkriteriaController::class);
 Route::get('subkriteria/detail/{id_tanaman}', [DataSubkriteriaController::class, 'detail'])->name('subkriteria.detail');
+Route::get('perhitungan', [PerhitunganController::class, 'index'])->name('perhitungan.index');

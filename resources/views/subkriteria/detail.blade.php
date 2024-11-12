@@ -3,7 +3,7 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="mb-0">Data Subkriteria Tanaman {{$subkriteria->pluck('tanaman.nama_tanaman')->first()}}</h2>
-    <a href="{{ route('subkriteria.index') }}" class="btn btn-primary">Edit</a>
+    <a href="{{ route('tanaman.edit', $subkriteria->pluck('tanaman.id')->first()) }}" class="btn btn-primary">Edit</a>
 </div>
 
 @if (session('success'))

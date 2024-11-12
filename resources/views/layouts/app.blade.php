@@ -131,7 +131,7 @@
 
             <li class="nav-heading">SAW</li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('forecasting*') ? 'active' : 'collapsed' }}" href="#">
+                <a class="nav-link {{ Request::is('perhitungan*') ? 'active' : 'collapsed' }}" href="{{route('perhitungan.index')}}">
                     <i class="bi bi-graph-up"></i>
                     <span>Perhitungan</span>
                 </a>
