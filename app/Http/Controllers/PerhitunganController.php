@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DataSubkriteria;
 use App\Models\DataTanah;
 use App\Models\DataTanaman;
 use App\Models\DataKriteria;
 use Illuminate\Http\Request;
+use App\Models\DataKesesuaian;
+use App\Models\DataSubkriteria;
 
 class PerhitunganController extends Controller
 {
@@ -27,8 +28,11 @@ class PerhitunganController extends Controller
 
             // Data Preferensi
             $preferensi = $this->nilaiPreferensi($normalisasi, $tanaman);
+            $preferensi = collect($preferensi)->sortByDesc('nilai_preferensi');
 
-            return view('perhitungan.index', compact(['kriteria', 'tanah', 'pilihTanah', 'tanaman', 'dataAlternatif', 'normalisasi', 'preferensi']));
+            $kesesuaian = DataKesesuaian::all();
+
+            return view('perhitungan.index', compact(['kriteria', 'kesesuaian', 'tanah', 'pilihTanah', 'tanaman', 'dataAlternatif', 'normalisasi', 'preferensi']));
         }else{
             return view('perhitungan.index', compact(['kriteria', 'tanah']));
         }

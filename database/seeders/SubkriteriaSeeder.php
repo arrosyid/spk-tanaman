@@ -139,7 +139,7 @@ class SubkriteriaSeeder extends Seeder
             ['id_kriteria' => '2','id_tanaman' => '8','id_kesesuaian' => '2','range' => '6.6-7.3','created_at' => now()],
             ['id_kriteria' => '2','id_tanaman' => '8','id_kesesuaian' => '3','range' => '<5.5','created_at' => now()],
             ['id_kriteria' => '2','id_tanaman' => '8','id_kesesuaian' => '3','range' => '<7.4','created_at' => now()],
-            ['id_kriteria' => '3','id_tanaman' => '8','id_kesesuaian' => '1','range' => '>100','created_at' => now()],
+            ['id_kriteria' => '3','id_tanaman' => '8','id_kesesuaian' => '1','range' => '>150','created_at' => now()],
             ['id_kriteria' => '3','id_tanaman' => '8','id_kesesuaian' => '2','range' => '100-150','created_at' => now()],
             ['id_kriteria' => '3','id_tanaman' => '8','id_kesesuaian' => '3','range' => '50-100','created_at' => now()],
             ['id_kriteria' => '3','id_tanaman' => '8','id_kesesuaian' => '4','range' => '<50','created_at' => now()],
@@ -158,7 +158,7 @@ class SubkriteriaSeeder extends Seeder
             ['id_kriteria' => '2','id_tanaman' => '9','id_kesesuaian' => '2','range' => '4.4-4.0','created_at' => now()],
             ['id_kriteria' => '2','id_tanaman' => '9','id_kesesuaian' => '3','range' => '3.9-3.5','created_at' => now()],
             ['id_kriteria' => '2','id_tanaman' => '9','id_kesesuaian' => '4','range' => '<3.5','created_at' => now()],
-            ['id_kriteria' => '3','id_tanaman' => '9','id_kesesuaian' => '1','range' => '>100','created_at' => now()],
+            ['id_kriteria' => '3','id_tanaman' => '9','id_kesesuaian' => '1','range' => '>150','created_at' => now()],
             ['id_kriteria' => '3','id_tanaman' => '9','id_kesesuaian' => '2','range' => '100-149','created_at' => now()],
             ['id_kriteria' => '3','id_tanaman' => '9','id_kesesuaian' => '3','range' => '40-99','created_at' => now()],
             ['id_kriteria' => '3','id_tanaman' => '9','id_kesesuaian' => '4','range' => '<40','created_at' => now()]

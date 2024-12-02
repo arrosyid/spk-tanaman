@@ -125,6 +125,38 @@
                 @endforeach
             </tbody>
         </table>
+
+        <hr>
+        <h5>Rekomendasi</h5>
+        <table class="table table-hover table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Kriteria</th>
+                    <th>Tanaman</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($kesesuaian as $K)
+                <tr>
+                    <td>{{ $K['tingkatan'] }}</td>
+                    <td>
+                        {{collect($preferensi)
+                            ->where('kriteria', $K['tingkatan'])
+                            ->map(function ($item) { 
+                                return $item['nama_tanaman']; 
+                            })
+                            ->values()
+                            ->whenNotEmpty(function ($collection) { // when not empty
+                                return $collection->implode(', ');
+                            }, function () { // when empty
+                                return 'Tidak Ada Data'; 
+                            })
+                        }}
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
         @endif
     </div>
 </div>
