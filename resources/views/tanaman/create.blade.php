@@ -28,6 +28,7 @@
                         </div>
                         <div class="col">
                             <input type="text" name="kriteria[][{{$C->id}}][{{$k->id}}]" id="subkriteria-primary-0" placeholder="Masukkan Rentang Nilai Subkriteria {{$C->nama_kriteria}}" class="form-control">
+                            <input type="hidden" name="loop[][{{$C->id}}][{{$k->id}}]" value="1" id="loop">
                         </div>
                     </div>
                     @endforeach
@@ -50,9 +51,18 @@
         const container = document.getElementById(`group-container-${kriteriaId}`);
         // Get the template and clone it
         const template = container.querySelector('.subkriteria-group-template');
+        // menghitung index
+        const nextIndex = container.querySelectorAll('.subkriteria-group-template').length + 1;
         const clone = template.cloneNode(true);
+
+        const loopElement = clone.querySelector('#loop');
+        if (loopElement) {
+            loopElement.setAttribute('id', `loop-${nextIndex}`);
+            loopElement.setAttribute('value', nextIndex);
+        }
         // Generate a unique index based on the current time for dynamic name attribute
         clone.querySelector('#remove-subkriteria').classList.remove('d-none');
+
         // Append the cloned template to the container
         container.appendChild(clone);
     }

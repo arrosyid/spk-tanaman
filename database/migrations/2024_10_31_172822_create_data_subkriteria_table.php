@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('id_tanaman')->constrained('data_tanaman');
             $table->foreignId('id_kesesuaian')->constrained('data_kesesuaian');
             $table->string('range');
+            $table->integer('loop');
             $table->timestamps();
         });
     }

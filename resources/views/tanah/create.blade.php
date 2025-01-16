@@ -21,10 +21,10 @@
             <hr>
             <h3>Masukkan Kondisi Tanah</h3>
             <p>Masukkan kondisi tanah sesuai dengan kriteria. Gunakan titik untuk koma (contoh: 5.2)</p>
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <label for="nama_tanah" class="form-label">Bulan</label>
                 <input type="month" name="bulan" placeholder="Masukkan Bulan Kondisi" class="form-control" required>
-            </div>
+            </div> -->
             @foreach ($kriteria as $C)
             <div class="mb-3">
                 <label class="form-label">{{$C->nama_kriteria}}</label>

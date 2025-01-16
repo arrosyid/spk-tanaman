@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DataSubkriteria;
 use App\Models\DataTanaman;
 use App\Models\DataKriteria;
 use Illuminate\Http\Request;
 use App\Models\DataKesesuaian;
+use App\Models\DataSubkriteria;
+use Illuminate\Support\Facades\DB;
 
 class DataTanamanController extends Controller
 {
@@ -50,7 +51,9 @@ class DataTanamanController extends Controller
 
         // 2. Siapkan data subkriteria
         $subkriteriaData = [];
-        foreach ($request->input('kriteria') as $kriteria) {
+        $loop = $request->input('loop');
+
+        foreach ($request->input('kriteria') as $index => $kriteria) {
             foreach ($kriteria as $id_kriteria => $tingkatan) {
                 foreach ($tingkatan as $id_kesesuaian => $range) {
                     if ($range == null) {
@@ -60,6 +63,7 @@ class DataTanamanController extends Controller
                             'id_kriteria' => $id_kriteria,
                             'id_kesesuaian' => $id_kesesuaian,
                             'range' => $range,
+                            'loop' => $loop[$index][$id_kriteria][$id_kesesuaian]
                         ]);
                     }
                 }
@@ -87,10 +91,13 @@ class DataTanamanController extends Controller
         $tanaman = DataTanaman::findOrFail($tanaman->id);
         $kriteria = DataKriteria::all();
         $kesesuaian = DataKesesuaian::all();
-        // dd($tanaman->subkriteria);
+        $subkriteria = DataSubkriteria::where('id_tanaman', $tanaman->id)->get();
+        // penggunaan didalam view
+        // dd($subkriteria->where('loop', 1)->where('id_kriteria', 1)->all());
+
         return view(
             'tanaman.edit',
-            compact(['tanaman', 'kriteria', 'kesesuaian'])
+            compact(['tanaman', 'kriteria', 'kesesuaian', 'subkriteria'])
         );
     }
 
@@ -99,46 +106,79 @@ class DataTanamanController extends Controller
      */
     public function update(Request $request, DataTanaman $tanaman)
     {
-        dd($request->all());
+        // dd($request->all());
         // Validasi inputan untuk update
         $request->validate([
             'nama_tanaman' => 'required',
-            'kriteria' => 'required|array',
+            'kriteria' => 'required',
         ]);
 
-        // Ambil data tanaman berdasarkan ID
-        $tanaman = DataTanaman::findOrFail($tanaman->id);
+        // dd($tanaman);
+        // // Ambil data tanaman berdasarkan ID
+        // $tanamans = DataTanaman::findOrFail($tanaman->id);
+        
 
         // 2. Siapkan data subkriteria
         $subkriteriaData = [];
-        foreach ($request->input('kriteria') as $kriteria) {
+        $loop = $request->input('loop');
+        $id=$request->input('id');
+
+        foreach ($request->input('kriteria') as $index => $kriteria) {
             foreach ($kriteria as $id_kriteria => $tingkatan) {
                 foreach ($tingkatan as $id_kesesuaian => $range) {
                     if ($range == null) {
                         continue;
                     }else{
-                        $subkriteriaData[] = new DataSubkriteria([
+                        // $subkriteriaData[] = new DataSubkriteria([
+                        //     'id' => $id[$index][$id_kriteria][$id_kesesuaian],
+                        //     'id_kriteria' => $id_kriteria,
+                        //     'id_kesesuaian' => $id_kesesuaian,
+                        //     'range' => $range,
+                        //     'loop' => $loop[$index][$id_kriteria][$id_kesesuaian]
+                        // ]);
+                        $subkriteriaData[] = [
+                            'id' => $id[$index][$id_kriteria][$id_kesesuaian],
                             'id_kriteria' => $id_kriteria,
                             'id_kesesuaian' => $id_kesesuaian,
+                            'id_tanaman' => $tanaman->id,
                             'range' => $range,
-                        ]);
+                            'loop' => $loop[$index][$id_kriteria][$id_kesesuaian]
+                        ];
                     }
                 }
             }
         }
+        // dd($subkriteriaData);
 
-        // Update data dengan inputan baru
-        $tanaman->update($request->nama_tanaman);
-        $tanaman->subkriteria()->updateOrCreate(
-            [
-                'id_kriteria' => $request->id_kriteria
-            ],
-            [
-                'id_kriteria' => $request->id_kriteria,
-                'id_kesesuaian' => $request->id_kesesuaian,
-                'range' => $request->range,
-            ]
-        );
+        DB::transaction(function () use ($tanaman, $request, $subkriteriaData) {
+            foreach ($subkriteriaData as $subkriteria) {
+                DataSubkriteria::updateOrCreate(
+                    [
+                        'id' => $subkriteria['id'],
+                    ],
+                    [
+                        'id_kriteria' => $subkriteria['id_kriteria'],
+                        'id_kesesuaian' => $subkriteria['id_kesesuaian'],
+                        'id_tanaman' => $subkriteria['id_tanaman'],
+                        'range' => $subkriteria['range'],
+                        'loop' => $subkriteria['loop'],
+                    ]
+                );
+            }
+            // Update data dengan inputan baru
+            $tanaman->update(['nama_tanaman' => $request->nama_tanaman]);
+        }, 5);
+
+        // $tanaman->subkriteria()->updateOrCreate(
+        //     [
+        //         'id_kriteria' => $request->id_kriteria
+        //     ],
+        //     [
+        //         'id_kriteria' => $request->id_kriteria,
+        //         'id_kesesuaian' => $request->id_kesesuaian,
+        //         'range' => $request->range,
+        //     ]
+        // );
         // $tanaman->subkriteria()->delete();
         // $tanaman->subkriteria()->saveMany($subkriteriaData);
 
@@ -157,5 +197,17 @@ class DataTanamanController extends Controller
         $tanaman->delete();
         // Redirect kembali ke halaman index dengan pesan sukses
         return redirect()->route('tanaman.index')->with('success', 'Data tanaman berhasil dihapus.');
+    }
+
+    public function destroyJSON($id_kriteria, $id_tanaman, $loop)
+    {
+        try {
+            $subkriteria = DataSubkriteria::where('id_kriteria', $id_kriteria)->where('id_tanaman', $id_tanaman)->where('loop', $loop);
+            $subkriteria->delete();
+
+            return response()->json(['message' => 'Data berhasil dihapus'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal menghapus data'], 500);
+        }
     }
 }

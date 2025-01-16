@@ -3,7 +3,7 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h4>Tambah Tanah</h4>
+        <h4>Edit Tanah</h4>
     </div>
     <div class="card-body">
         <form action="{{ route('tanah.update', $dataTanah->id) }}" method="POST">
@@ -22,10 +22,10 @@
             <hr>
             <h3>Masukkan Kondisi Tanah</h3>
             <p>Masukkan kondisi tanah sesuai dengan kriteria. Gunakan titik untuk koma (contoh: 5.2)</p>
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <label for="nama_tanah" class="form-label">Bulan</label>
                 <input type="month" name="bulan" placeholder="Masukkan Bulan Kondisi" value="{{$dataTanah->kondisiTanah->first()->bulan}}" class="form-control" required>
-            </div>
+            </div> -->
 
             @foreach ($kriteria as $C)
             <div class="mb-3">

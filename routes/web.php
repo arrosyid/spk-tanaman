@@ -29,3 +29,4 @@ Route::resource('tanah', DataTanahController::class);
 Route::resource('subkriteria', DataSubkriteriaController::class);
 Route::get('subkriteria/detail/{id_tanaman}', [DataSubkriteriaController::class, 'detail'])->name('subkriteria.detail');
 Route::get('perhitungan', [PerhitunganController::class, 'index'])->name('perhitungan.index');
+Route::delete('/tanaman/deletejson/{id_kriteria}/{id_tanaman}/{loop}', [DataTanamanController::class, 'destroyJSON'])->name('subkriteria.destroyJSON');

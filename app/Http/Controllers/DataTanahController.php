@@ -28,7 +28,8 @@ class DataTanahController extends Controller
                     'id_tanah' => $item->tanah->id,
                     'kode_tanah' => $item->tanah->kode_tanah,
                     'lokasi_tanah' => $item->tanah->lokasi_tanah,
-                    'bulan' => $item->bulan,
+                    // 'bulan' => $item->bulan,
+                    'bulan' => now()->format('F Y'),
                     'kriteria' => []
                 ];
             }

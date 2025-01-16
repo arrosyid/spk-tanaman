@@ -22,7 +22,6 @@ class PerhitunganController extends Controller
             $tanaman = DataTanaman::all();
             // Data Aleternatif
             $dataAlternatif = $this->convert($tanaman, $pilihTanah->kondisiTanah);
-
             // Data Normalisasi
             $normalisasi = $this->normalisasi($dataAlternatif, $kriteria);
 
@@ -161,13 +160,13 @@ class PerhitunganController extends Controller
             $nilai_preferensi = array_sum($butir_preferensi);
 
             $kriteria = '';
-            if (0.75 <= $nilai_preferensi && $nilai_preferensi <= 1) {
+            if (0.82 <= $nilai_preferensi && $nilai_preferensi <= 1) {
                 $kriteria = 'S1';
-            }elseif (0.5 <= $nilai_preferensi && $nilai_preferensi < 0.75) {
+            }elseif (0.55 <= $nilai_preferensi && $nilai_preferensi < 0.82) {
                 $kriteria = 'S2';
-            }elseif (0.25 <= $nilai_preferensi && $nilai_preferensi < 0.5) {
+            }elseif (0.55 <= $nilai_preferensi && $nilai_preferensi < 0.4) {
                 $kriteria = 'S3';
-            }elseif (0 <= $nilai_preferensi && $nilai_preferensi < 0.25) {
+            }elseif (0 <= $nilai_preferensi && $nilai_preferensi < 0.4) {
                 $kriteria = 'N';
             }
             // data hasil preferensi
