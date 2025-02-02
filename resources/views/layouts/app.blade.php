@@ -28,9 +28,13 @@
     <link href="{{ asset('assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
+    <!-- @vite(['resources/css/app.css', 'resources/js/app.js']) -->
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    
 
 
 

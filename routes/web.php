@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\DataSubkriteriaController;
-use App\Http\Controllers\DataTanahController;
-use App\Http\Controllers\DataTanamanController;
-use App\Http\Controllers\PerhitunganController;
+use App\Http\Controllers\DashboardController;
+use App\Models\DataTanah;
 use App\Models\DataKesesuaian;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KriteriaController;
+use App\Http\Controllers\DataTanahController;
+use App\Http\Controllers\DataTanamanController;
+use App\Http\Controllers\PerhitunganController;
+use App\Http\Controllers\DataSubkriteriaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,11 +20,7 @@ use App\Http\Controllers\KriteriaController;
 |
 */
 
-Route::get('/', function () {
-    // KIRIM DATA KE VIEW
-    $kesesuaian = DataKesesuaian::all();
-    return view('dashboard', ['kesesuaian' => $kesesuaian]);
-});
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::resource('kriteria', KriteriaController::class);
 Route::resource('tanaman',DataTanamanController::class);
 Route::resource('tanah', DataTanahController::class);

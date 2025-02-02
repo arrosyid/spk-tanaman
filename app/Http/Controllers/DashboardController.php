@@ -8,35 +8,43 @@ use App\Models\DataKriteria;
 use Illuminate\Http\Request;
 use App\Models\DataKesesuaian;
 use App\Models\DataPreferensi;
-use App\Models\DataSubkriteria;
 use Illuminate\Support\Facades\DB;
 
-class PerhitunganController extends Controller
+class DashboardController extends Controller
 {
-    //Perhitungan SAW
+    //
     public function index(Request $request)
     {
-        $kriteria = DataKriteria::all();
-        $tanah = DataTanah::all();
-        // dd($request->all());
-        if ($request->all() != null) {
-            $pilihTanah = DataTanah::where('id', $request->tanah)->first();
-            $tanaman = DataTanaman::all();
-            // Data Aleternatif
-            $dataAlternatif = $this->convert($tanaman, $pilihTanah->kondisiTanah);
-            // Data Normalisasi
-            $normalisasi = $this->normalisasi($dataAlternatif, $kriteria);
-
-            // Data Preferensi
-            $preferensi = $this->nilaiPreferensi($normalisasi, $tanaman);
-            $preferensi = collect($preferensi)->sortByDesc(callback: 'nilai_preferensi');
-
-            $kesesuaian = DataKesesuaian::all();
-
-            return view('perhitungan.index', compact(['kriteria', 'kesesuaian', 'tanah', 'pilihTanah', 'tanaman', 'dataAlternatif', 'normalisasi', 'preferensi']));
-        }else{
-            return view('perhitungan.index', compact(['kriteria', 'tanah']));
+    $kesesuaian = DataKesesuaian::all();
+    $tanah = DataTanah::all();
+    if ($request->all() != null) {
+        $tanaman = DataTanaman::all();
+        $pilihTanah = DataTanah::where('id', $request->tanah)->first();
+        $preferensi = DataPreferensi::where('id_tanah', $pilihTanah->id)->orderBy('nilai_preferensi', 'desc')->get();
+        if ($preferensi->isEmpty()) {
+            $preferensi = $this->simpan($pilihTanah->id);
         }
+        return view('dashboard', data: compact(['tanah', 'kesesuaian', 'preferensi', 'pilihTanah']));
+    }else{
+        return view('dashboard', compact(['tanah', 'kesesuaian']));
+    }
+
+    }
+
+    private function simpan($id_tanah) {
+        $kriteria = DataKriteria::all();
+        $pilihTanah = DataTanah::where('id', $id_tanah)->first();
+        $tanaman = DataTanaman::all();
+        // Data Aleternatif
+        $dataAlternatif = $this->convert($tanaman, $pilihTanah->kondisiTanah);
+        // Data Normalisasi
+        $normalisasi = $this->normalisasi($dataAlternatif, $kriteria);
+
+        // Data Preferensi
+        $preferensi = $this->nilaiPreferensi($normalisasi, $tanaman);
+        $preferensi = collect($preferensi)->sortByDesc(callback: 'nilai_preferensi');
+
+        return $preferensi;
     }
 
     private function convert($tanaman, $kondisiTanah) 
@@ -183,6 +191,7 @@ class PerhitunganController extends Controller
             ];
             array_push($result, $preferensi);
         }
+        // dd($result);
         // update or create data preferensi
         DB::transaction(function () use ($result) {
             foreach ($result as $resultPreferensi) {

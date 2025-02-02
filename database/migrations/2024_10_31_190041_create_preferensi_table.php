@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('id_tanaman')->constrained('data_tanaman');
             $table->foreignId('id_tanah')->constrained('data_tanah');
             $table->double('nilai_preferensi');
-            $table->string('tingkat');
+            $table->string('kriteria');
+            $table->string('nama_tanaman');
             $table->timestamps();
         });
     }

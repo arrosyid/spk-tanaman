@@ -12,7 +12,7 @@
             <div class="row mb-3">
                 <label for="bulan" class="col-md-4 col-lg-3 col-form-label">Pilih Tanah</label>
                 <div class="col-md-8 col-lg-9">
-                    <select name="tanah" id="tanah" class="form-control">
+                    <select name="tanah" id="tanah" class="form-select">
                         <option disabled selected>pilih tanah</option>
                         @foreach ($tanah as $t)
                             <option value="{{ $t->id }}">{{ $t->kode_tanah . ', '. $t->lokasi_tanah }}</option>
